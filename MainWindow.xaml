@@ -1,0 +1,34 @@
+﻿<Window x:Class="NedvizhPr.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NedvizhPr"
+        mc:Ignorable="d"
+        Title="Esoft" Height="450" Width="800" MaxWidth="800" MaxHeight="450" MinWidth="800" MinHeight="450" Icon="/Resources/logo.png" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Image Source="Resources/logo.png" HorizontalAlignment="Left" Panel.ZIndex="1" Margin="5,0,0,0"/>
+        <Label x:Name="HeadLb" Content="Главная" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Grid Background="#ECEFF1" Panel.ZIndex="-2"/>
+        <Grid  Background="#ECEFF1"  Grid.Row="1">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" 
+                        VerticalAlignment="Center">
+                <Button x:Name="ClientsBtn" Content="Клиент" Click="ClientsBtn_Click"/>
+                <Button x:Name="AgentsBtn" Content="Риэлтор" Click="AgentsBtn_Click"></Button>
+                <Button x:Name="RealtyBtn" Content="Недвижимость"/>
+                <Button x:Name="SupplyBtn" Content="Предложение"/>
+                <Button x:Name="DemandsBtn" Content="Потребность"/>
+                <Button x:Name="DealsBtn" Content="Сделка"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Background="#ECEFF1" Grid.Row="3"/>
+        <Frame Name="MainFrame" Grid.Row="2"  NavigationUIVisibility="Hidden" Content="Нажмите на кнопки выше" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </Grid>
+</Window>
