@@ -18,6 +18,7 @@
             <Setter Property="Margin" Value="0,0,5,0"/>
             <Setter Property="Padding" Value="10,5"/>
             <Setter Property="BorderBrush" Value="{x:Null}"/>
+            <Setter Property="Height" Value="30"/>
         </Style>
     </Application.Resources>
 </Application>

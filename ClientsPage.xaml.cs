@@ -23,6 +23,37 @@ namespace NedvizhPr
         public ClientsPage()
         {
             InitializeComponent();
+            DGridClients.ItemsSource = nedvizhdbEntities.GetContext().Clients.ToList();
+        }
+
+        private void EditBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AddBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var clientsForRemoving = DGridClients.SelectedItems.Cast<Client>().ToList();
+            if (MessageBox.Show($"Вы точно хотите удалить следующие {clientsForRemoving.Count()} элементов?", "Внимание", 
+                MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    nedvizhdbEntities.GetContext().Clients.RemoveRange(clientsForRemoving);
+                    nedvizhdbEntities.GetContext().SaveChanges();
+                    MessageBox.Show("Данные удалены");
+                    DGridClients.ItemsSource = nedvizhdbEntities.GetContext().Clients.ToList();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                }
+            }
         }
     }
 }
