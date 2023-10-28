@@ -37,5 +37,28 @@ namespace NedvizhPr
             MainFrame.Navigate(new AgentsPage());
         }
 
+        private void RealtyBtn_Click(object sender, RoutedEventArgs e)
+        {
+            HeadLb.Content = "Работа с недвижимостью";
+            MainFrame.Navigate(new RealtyPage());
+        }
+
+        private void SupplyBtn_Click(object sender, RoutedEventArgs e)
+        {
+            HeadLb.Content = "Работа с предложениями";
+            MainFrame.Navigate(new SupplyPage());
+        }
+
+        private void DemandsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            HeadLb.Content = "Работа с потребностями";
+            MainFrame.Navigate(new DemandsPage());
+        }
+
+        private void DealsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            HeadLb.Content = "Работа со сделками";
+            MainFrame.Navigate(new DealsPage());
+        }
     }
 }

@@ -21,13 +21,12 @@
                         VerticalAlignment="Center">
                 <Button x:Name="ClientsBtn" Content="Клиент" Click="ClientsBtn_Click"/>
                 <Button x:Name="AgentsBtn" Content="Риэлтор" Click="AgentsBtn_Click"></Button>
-                <Button x:Name="RealtyBtn" Content="Недвижимость"/>
-                <Button x:Name="SupplyBtn" Content="Предложение"/>
-                <Button x:Name="DemandsBtn" Content="Потребность"/>
-                <Button x:Name="DealsBtn" Content="Сделка"/>
+                <Button x:Name="RealtyBtn" Content="Недвижимость" Click="RealtyBtn_Click"/>
+                <Button x:Name="SupplyBtn" Content="Предложение" Click="SupplyBtn_Click"/>
+                <Button x:Name="DemandsBtn" Content="Потребность" Click="DemandsBtn_Click"/>
+                <Button x:Name="DealsBtn" Content="Сделка" Click="DealsBtn_Click"/>
             </StackPanel>
         </Grid>
-
         <Grid Background="#ECEFF1" Grid.Row="3"/>
         <Frame Name="MainFrame" Grid.Row="2"  NavigationUIVisibility="Hidden" Content="Нажмите на кнопки выше" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
