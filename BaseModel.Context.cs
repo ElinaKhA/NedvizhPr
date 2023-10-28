@@ -15,9 +15,16 @@ namespace NedvizhPr
     
     public partial class nedvizhdbEntities : DbContext
     {
+        private static nedvizhdbEntities _context;
         public nedvizhdbEntities()
             : base("name=nedvizhdbEntities")
         {
+        }
+        public static nedvizhdbEntities GetContext()
+        {
+            if (_context == null)
+                _context = new nedvizhdbEntities();
+            return _context;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
