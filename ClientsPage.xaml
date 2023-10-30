@@ -16,8 +16,11 @@
         <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
         <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
         <ControlTemplate x:Key="ButtonTemplate1" TargetType="{x:Type ButtonBase}">
-            <Border x:Name="border" CornerRadius="2" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
-                <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            <Border x:Name="border" CornerRadius="2" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                  Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
             </Border>
             <ControlTemplate.Triggers>
                 <Trigger Property="Button.IsDefaulted" Value="true">
@@ -34,7 +37,8 @@
                 <Trigger Property="IsEnabled" Value="false">
                     <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
                     <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
-                    <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                    <Setter Property="TextElement.Foreground" TargetName="contentPresenter" 
+                            Value="{StaticResource Button.Disabled.Foreground}"/>
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -56,14 +60,17 @@
                 <DataGridTemplateColumn Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Template="{DynamicResource ButtonTemplate1}" Content="Редактировать" Name="EditBtn" Click="EditBtn_Click"></Button>
+                            <Button Template="{DynamicResource ButtonTemplate1}" Content="Редактировать" 
+                                    Name="EditBtn" Click="EditBtn_Click"></Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Template="{DynamicResource ButtonTemplate1}" Content="Добавить" Grid.Row="1" HorizontalAlignment="Left" Name="AddBtn" Click="AddBtn_Click"/>
-        <Button Template="{DynamicResource ButtonTemplate1}" Content="Удалить" Grid.Row="1" HorizontalAlignment="Right" Name="DeleteBtn" Click="DeleteBtn_Click" />
+        <Button Template="{DynamicResource ButtonTemplate1}" Content="Добавить" Grid.Row="1"
+                HorizontalAlignment="Left" Name="AddBtn" Click="AddBtn_Click" Margin="5" />
+        <Button Template="{DynamicResource ButtonTemplate1}" Content="Удалить" Grid.Row="1" 
+                HorizontalAlignment="Right" Name="DeleteBtn" Click="DeleteBtn_Click" Margin="5"/>
     </Grid>
 </Page>

@@ -27,12 +27,12 @@ namespace NedvizhPr
 
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            Manager.MainFrame.Navigate(new AddEditPage((sender as Button).DataContext as Client));
         }
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
-            Manager.MainFrame.Navigate(new AddEditPage());
+            Manager.MainFrame.Navigate(new AddEditPage(null));
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
