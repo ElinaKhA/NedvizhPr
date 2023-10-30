@@ -6,11 +6,10 @@
     <Application.Resources>
         <Style TargetType="Label">
             <Setter Property="FontFamily" Value="Roboto-Medium.ttf" />
-            <Setter Property="FontSize" Value="24"/>
             <Setter Property="Foreground" Value="#37474F" />
         </Style>
         <Style TargetType="TextBox">
-            <Setter Property="FontFamily" Value="Roboto-Medium.ttf" />
+            <Setter Property="FontFamily" Value="Roboto-Regular.ttf" />
             <Setter Property="Height" Value="20" />
             <Setter Property="FontSize" Value="16"/>
         </Style>        
