@@ -6,6 +6,42 @@
         xmlns:local="clr-namespace:NedvizhPr"
         mc:Ignorable="d"
         Title="Esoft" Height="450" Width="800" MaxWidth="800" MaxHeight="450" MinWidth="800" MinHeight="450" Icon="/Resources/logo.png" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FF0079C3"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF0079C3"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FF0079C3"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF0079C3"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        <ControlTemplate x:Key="ButtonTemplate1" TargetType="{x:Type ButtonBase}">
+            <Border x:Name="border" CornerRadius="2" Background="{TemplateBinding Background}" 
+                    BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
+                    SnapsToDevicePixels="true">
+                <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                  Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" 
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Button.IsDefaulted" Value="true">
+                    <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="true">
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                    <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="75"/>
@@ -19,15 +55,16 @@
         <Grid  Background="#ECEFF1"  Grid.Row="1">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" 
                         VerticalAlignment="Center">
-                <Button x:Name="ClientsBtn" Content="Клиент" Click="ClientsBtn_Click"/>
-                <Button x:Name="AgentsBtn" Content="Риэлтор" Click="AgentsBtn_Click"></Button>
-                <Button x:Name="RealtyBtn" Content="Недвижимость" Click="RealtyBtn_Click"/>
-                <Button x:Name="SupplyBtn" Content="Предложение" Click="SupplyBtn_Click"/>
-                <Button x:Name="DemandsBtn" Content="Потребность" Click="DemandsBtn_Click"/>
-                <Button x:Name="DealsBtn" Content="Сделка" Click="DealsBtn_Click"/>
+                <Button Template="{DynamicResource ButtonTemplate1}" x:Name="ClientsBtn" Content="Клиент" Click="ClientsBtn_Click"/>
+                <Button Template="{DynamicResource ButtonTemplate1}" x:Name="AgentsBtn" Content="Риэлтор" Click="AgentsBtn_Click"></Button>
+                <Button Template="{DynamicResource ButtonTemplate1}" x:Name="RealtyBtn" Content="Недвижимость" Click="RealtyBtn_Click"/>
+                <Button Template="{DynamicResource ButtonTemplate1}" x:Name="SupplyBtn" Content="Предложение" Click="SupplyBtn_Click"/>
+                <Button Template="{DynamicResource ButtonTemplate1}" x:Name="DemandsBtn" Content="Потребность" Click="DemandsBtn_Click"/>
+                <Button Template="{DynamicResource ButtonTemplate1}" x:Name="DealsBtn" Content="Сделка" Click="DealsBtn_Click"/>
             </StackPanel>
         </Grid>
         <Grid Background="#ECEFF1" Grid.Row="3"/>
-        <Frame Name="MainFrame" Grid.Row="2"  NavigationUIVisibility="Hidden" Content="Нажмите на кнопки выше" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Frame Name="MainFrame" Grid.Row="2"  NavigationUIVisibility="Hidden" Content="Нажмите на кнопки выше" 
+               HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Window>

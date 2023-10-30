@@ -23,42 +23,43 @@ namespace NedvizhPr
         public MainWindow()
         {
             InitializeComponent();
+            Manager.MainFrame = MainFrame;
         }
 
         private void ClientsBtn_Click(object sender, RoutedEventArgs e)
         {
             HeadLb.Content = "Работа с клиентами";
-            MainFrame.Navigate(new ClientsPage());
+            Manager.MainFrame.Navigate(new ClientsPage());
         }
 
         private void AgentsBtn_Click(object sender, RoutedEventArgs e)
         {
             HeadLb.Content = "Работа с риэлторами";
-            MainFrame.Navigate(new AgentsPage());
+            Manager.MainFrame.Navigate(new AgentsPage());
         }
 
         private void RealtyBtn_Click(object sender, RoutedEventArgs e)
         {
             HeadLb.Content = "Работа с недвижимостью";
-            MainFrame.Navigate(new RealtyPage());
+            Manager.MainFrame.Navigate(new RealtyPage());
         }
 
         private void SupplyBtn_Click(object sender, RoutedEventArgs e)
         {
             HeadLb.Content = "Работа с предложениями";
-            MainFrame.Navigate(new SupplyPage());
+            Manager.MainFrame.Navigate(new SupplyPage());
         }
 
         private void DemandsBtn_Click(object sender, RoutedEventArgs e)
         {
             HeadLb.Content = "Работа с потребностями";
-            MainFrame.Navigate(new DemandsPage());
+            Manager.MainFrame.Navigate(new DemandsPage());
         }
 
         private void DealsBtn_Click(object sender, RoutedEventArgs e)
         {
             HeadLb.Content = "Работа со сделками";
-            MainFrame.Navigate(new DealsPage());
+            Manager.MainFrame.Navigate(new DealsPage());
         }
     }
 }

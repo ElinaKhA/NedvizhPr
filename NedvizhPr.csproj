@@ -107,6 +107,7 @@
     <Compile Include="District.cs">
       <DependentUpon>BaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Manager.cs" />
     <Compile Include="Realty.cs">
       <DependentUpon>BaseModel.tt</DependentUpon>
     </Compile>
