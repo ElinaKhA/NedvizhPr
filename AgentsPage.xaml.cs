@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static NedvizhPr.ClientsPage;
 
 namespace NedvizhPr
 {
@@ -75,13 +76,15 @@ namespace NedvizhPr
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            var AgentsForRemoving = DGridAgents.SelectedItems.Cast<Agent>().ToList();
-            if (MessageBox.Show($"Вы точно хотите удалить следующие {AgentsForRemoving.Count()} элементов?", "Внимание",
+            var ids = DGridAgents.SelectedItems.Cast<AgentData>().ToList().Select(agent => agent.Id).ToList();
+            var agentsToRemove = nedvizhdbEntities.GetContext().Agents.Where(agent => ids.Contains(agent.Id)).ToList();
+
+            if (MessageBox.Show($"Вы точно хотите удалить следующие {agentsToRemove.Count()} элементов?", "Внимание",
                 MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 try
                 {
-                    nedvizhdbEntities.GetContext().Agents.RemoveRange(AgentsForRemoving);
+                    nedvizhdbEntities.GetContext().Agents.RemoveRange(agentsToRemove);
                     nedvizhdbEntities.GetContext().SaveChanges();
                     MessageBox.Show("Данные удалены");
                     DGridAgents.ItemsSource = GetAllAgentsData(nedvizhdbEntities.GetContext()).ToList();
