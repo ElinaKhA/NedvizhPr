@@ -63,16 +63,16 @@ namespace NedvizhPr
             
             nedvizhdbEntities.GetContext().Clients.Add(_curClient);
 
-            //try
-            //{
+            try
+            {
                 nedvizhdbEntities.GetContext().SaveChanges();
                 MessageBox.Show("Информация сохранена");
                 Manager.MainFrame.GoBack();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message.ToString());
-            //}
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
         }
     }
 }

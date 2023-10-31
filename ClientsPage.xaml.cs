@@ -1,6 +1,8 @@
-﻿using System;
+﻿using DuoVia.FuzzyStrings;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,10 +26,51 @@ namespace NedvizhPr
         {
             InitializeComponent();
         }
+        public class ClientData
+        {
+            public int Id { get; set; }
+            public string FirstName { get; set; }
+            public string MiddleName { get; set; }
+            public string LastName { get; set; }
+            public string Phone { get; set; }
+            public string Email { get; set; }
+            public int Demand { get; set; }
+            public int Supply { get; set; }
+        }
 
+        public List<ClientData> GetAllClientsData(nedvizhdbEntities nedvizhdbEntities)
+        {
+            var clients = nedvizhdbEntities.Clients.ToList();
+            var demands = nedvizhdbEntities.Demands.ToList();
+            var supplies = nedvizhdbEntities.Supplies.ToList();
+
+            var allClients = clients.Select(cl => new ClientData
+            {
+                Id = cl.Id,
+                FirstName = cl.FirstName,
+                MiddleName = cl.MiddleName,
+                LastName = cl.LastName,
+                Phone = cl.Phone,
+                Email = cl.Email,
+                Demand = demands
+                    .Where(d => d.ClientId == cl.Id)
+                    .Select(d => d.Id)
+                    .FirstOrDefault(),
+                Supply = supplies
+                    .Where(s => s.ClientId == cl.Id)
+                    .Select(s => s.Id)
+                    .FirstOrDefault()
+            }).ToList();
+
+            return allClients;
+        }
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
-            Manager.MainFrame.Navigate(new AddEditPage((sender as Button).DataContext as Client));
+            var selectedClient = DGridClients.SelectedItem as ClientData;
+            int clientId = selectedClient.Id;
+            Client client = nedvizhdbEntities.GetContext().Clients.FirstOrDefault(c => c.Id == clientId); ;
+           // var clientsToEdit = nedvizhdbEntities.GetContext().Clients.Where(client => ids.Contains(client.Id)).ToList();
+            Manager.MainFrame.Navigate(new AddEditPage(client as Client));
         }
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
@@ -37,16 +80,19 @@ namespace NedvizhPr
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            var clientsForRemoving = DGridClients.SelectedItems.Cast<Client>().ToList();
-            if (MessageBox.Show($"Вы точно хотите удалить следующие {clientsForRemoving.Count()} элементов?", "Внимание", 
+           // var clientsForRemoving = DGridClients.SelectedItems.Cast<ClientData>().ToList();
+            var ids = DGridClients.SelectedItems.Cast<ClientData>().ToList().Select(client => client.Id).ToList();
+            var clientsToRemove = nedvizhdbEntities.GetContext().Clients.Where(client => ids.Contains(client.Id)).ToList();
+
+            if (MessageBox.Show($"Вы точно хотите удалить следующие {clientsToRemove.Count()} элементов?", "Внимание", 
                 MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 try
                 {
-                    nedvizhdbEntities.GetContext().Clients.RemoveRange(clientsForRemoving);
+                    nedvizhdbEntities.GetContext().Clients.RemoveRange(clientsToRemove);
                     nedvizhdbEntities.GetContext().SaveChanges();
                     MessageBox.Show("Данные удалены");
-                    DGridClients.ItemsSource = nedvizhdbEntities.GetContext().Clients.ToList();
+                    DGridClients.ItemsSource = GetAllClientsData(nedvizhdbEntities.GetContext()).ToList();
                 }
                 catch (Exception ex)
                 {
@@ -60,8 +106,18 @@ namespace NedvizhPr
             if (Visibility == Visibility.Visible)
             {
                 nedvizhdbEntities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
-                DGridClients.ItemsSource = nedvizhdbEntities.GetContext().Clients.ToList();
+                DGridClients.ItemsSource = GetAllClientsData(nedvizhdbEntities.GetContext()).ToList();
             }
+        }
+        private void findTb_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchText = findTb.Text;
+            var allClients = GetAllClientsData(nedvizhdbEntities.GetContext()).ToList();
+            var foundClients = allClients.Where(client =>
+            searchText.LevenshteinDistance(client.FirstName) <= 3 ||
+            searchText.LevenshteinDistance(client.MiddleName) <= 3 ||
+            searchText.LevenshteinDistance(client.LastName) <= 3).ToList();
+            DGridClients.ItemsSource = foundClients.ToList();
         }
     }
 }
