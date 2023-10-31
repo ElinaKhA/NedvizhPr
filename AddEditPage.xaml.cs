@@ -38,6 +38,14 @@ namespace NedvizhPr
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
             StringBuilder err = new StringBuilder();
+            if (string.IsNullOrWhiteSpace(_curClient.Phone) && string.IsNullOrWhiteSpace(_curClient.Email))
+                err.AppendLine("Укажите Телефон или Email");
+
+            if (err.Length > 0)
+            {
+                MessageBox.Show(err.ToString());
+                return;
+            }
             if (old == 0)
             {
                 var lastid = nedvizhdbEntities.GetContext().Clients.ToList().Last().Id;
@@ -52,14 +60,7 @@ namespace NedvizhPr
                 nedvizhdbEntities.GetContext().Clients.Remove(client);
                 nedvizhdbEntities.GetContext().SaveChanges();
             }
-            if (string.IsNullOrWhiteSpace(_curClient.Phone) && string.IsNullOrWhiteSpace(_curClient.Email))
-                err.AppendLine("Укажите Телефон или Email");
-
-            if (err.Length > 0)
-            {
-                MessageBox.Show(err.ToString());
-                return;
-            }
+            
             
             nedvizhdbEntities.GetContext().Clients.Add(_curClient);
 
