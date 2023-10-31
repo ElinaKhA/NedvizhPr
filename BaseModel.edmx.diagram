@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e5c1f5c4f4a94a509aa1e5ccf55794e8" Name="Diagram1">
+      <Diagram DiagramId="e5c1f5c4f4a94a509aa1e5ccf55794e8" Name="Diagram1" ZoomLevel="59">
         <EntityTypeShape EntityType="nedvizhdbModel.Agent" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
         <EntityTypeShape EntityType="nedvizhdbModel.Client" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="nedvizhdbModel.Deal" Width="1.5" PointX="8.25" PointY="5" IsExpanded="true" />
