@@ -66,12 +66,15 @@ namespace NedvizhPr
 
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
-           // Manager.MainFrame.Navigate(new AddEditPage((sender as Button).DataContext as Client));
+            var selectedAgent = DGridAgents.SelectedItem as AgentData;
+            int agentId = selectedAgent.Id;
+            Agent agent = nedvizhdbEntities.GetContext().Agents.FirstOrDefault(c => c.Id == agentId); ;
+            Manager.MainFrame.Navigate(new AddEditAgentsPage(agent as Agent));
         }
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
-          //  Manager.MainFrame.Navigate(new AddEditPage(null));
+            Manager.MainFrame.Navigate(new AddEditAgentsPage(null));
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)

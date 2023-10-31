@@ -70,6 +70,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddEditAgentsPage.xaml.cs">
+      <DependentUpon>AddEditAgentsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddEditPage.xaml.cs">
       <DependentUpon>AddEditPage.xaml</DependentUpon>
     </Compile>
@@ -122,6 +125,10 @@
     <Compile Include="SupplyPage.xaml.cs">
       <DependentUpon>SupplyPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="AddEditAgentsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AddEditPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
