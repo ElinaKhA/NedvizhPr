@@ -37,7 +37,6 @@ namespace NedvizhPr
             public int Demand { get; set; }
             public int Supply { get; set; }
         }
-
         public List<ClientData> GetAllClientsData(nedvizhdbEntities nedvizhdbEntities)
         {
             var clients = nedvizhdbEntities.Clients.ToList();
@@ -61,7 +60,6 @@ namespace NedvizhPr
                     .Select(s => s.Id)
                     .FirstOrDefault()
             }).ToList();
-
             return allClients;
         }
         private void EditBtn_Click(object sender, RoutedEventArgs e)
@@ -69,7 +67,6 @@ namespace NedvizhPr
             var selectedClient = DGridClients.SelectedItem as ClientData;
             int clientId = selectedClient.Id;
             Client client = nedvizhdbEntities.GetContext().Clients.FirstOrDefault(c => c.Id == clientId); ;
-           // var clientsToEdit = nedvizhdbEntities.GetContext().Clients.Where(client => ids.Contains(client.Id)).ToList();
             Manager.MainFrame.Navigate(new AddEditPage(client as Client));
         }
 
@@ -80,10 +77,8 @@ namespace NedvizhPr
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-           // var clientsForRemoving = DGridClients.SelectedItems.Cast<ClientData>().ToList();
             var ids = DGridClients.SelectedItems.Cast<ClientData>().ToList().Select(client => client.Id).ToList();
             var clientsToRemove = nedvizhdbEntities.GetContext().Clients.Where(client => ids.Contains(client.Id)).ToList();
-
             if (MessageBox.Show($"Вы точно хотите удалить следующие {clientsToRemove.Count()} элементов?", "Внимание", 
                 MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
