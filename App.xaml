@@ -4,28 +4,10 @@
              xmlns:local="clr-namespace:NedvizhPr"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <Style TargetType="Label">
-            <Setter Property="FontFamily" Value="Roboto-Medium.ttf" />
-            <Setter Property="Foreground" Value="#37474F" />
-        </Style>
-        <Style TargetType="TextBox">
-            <Setter Property="FontFamily" Value="Roboto-Regular.ttf" />
-            <Setter Property="Height" Value="20" />
-            <Setter Property="FontSize" Value="16"/>
-        </Style>        
-        <Style TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="Roboto-Medium.ttf" />
-            <Setter Property="FontSize" Value="16"/>
-        </Style>
-        <Style TargetType="Button">
-            <Setter Property="FontFamily" Value="Roboto-Regular.ttf" />
-            <Setter Property="Background" Value="#0091EA" />
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Margin" Value="0,0,5,0"/>
-            <Setter Property="Padding" Value="10,5"/>
-            <Setter Property="BorderBrush" Value="{x:Null}"/>
-            <Setter Property="Height" Value="30"/>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="DictionaryT.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
