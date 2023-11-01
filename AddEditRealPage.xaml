@@ -30,7 +30,7 @@
         <TextBlock Text="Адрес Дом" Grid.Row="2" Foreground="#FF37474F" VerticalAlignment="Center"/>
         <TextBlock Text="Адрес Номер" Grid.Row="3" Foreground="#FF37474F" VerticalAlignment="Center" />
         <TextBlock Text="Total этаж" Grid.Row="4" Foreground="#FF37474F" VerticalAlignment="Center" />
-        <TextBlock Text="Total местность" Grid.Row="5" Foreground="#FF37474F" VerticalAlignment="Center" />
+        <TextBlock Text="Total площадь" Grid.Row="5" Foreground="#FF37474F" VerticalAlignment="Center" />
         <TextBlock Text="Комнаты" Grid.Row="6" Foreground="#FF37474F" VerticalAlignment="Center"/>
         <TextBlock Text="Этажи" Grid.Row="7" Foreground="#FF37474F" VerticalAlignment="Center"/>
         <TextBlock Text="Район" Grid.Row="8" Foreground="#FF37474F" VerticalAlignment="Center"/>
@@ -44,7 +44,7 @@
                  HorizontalAlignment="Left" Foreground="#FF37474F"/>
         <TextBox Style="{StaticResource MyWaterMarkStyle}" Tag="Total этаж" Text="{Binding TotalFLoor}" Grid.Column="2" Grid.Row="4" Width="300" 
                  HorizontalAlignment="Left" Foreground="#FF37474F"/>
-        <TextBox Style="{StaticResource MyWaterMarkStyle}" Tag="Total местность" Text="{Binding TotalArea}" Grid.Column="2" Grid.Row="5" Width="500" 
+        <TextBox Style="{StaticResource MyWaterMarkStyle}" Tag="Total площадь" Text="{Binding TotalArea}" Grid.Column="2" Grid.Row="5" Width="500" 
                  HorizontalAlignment="Left" Foreground="#FF37474F"/>
         <TextBox Style="{StaticResource MyWaterMarkStyle}" Tag="Комнаты" Text="{Binding Rooms}"  Grid.Column="2" Grid.Row="6" Width="500" 
                  HorizontalAlignment="Left" Foreground="#FF37474F"/>
