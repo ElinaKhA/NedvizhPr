@@ -1,0 +1,78 @@
+﻿<Page x:Class="NedvizhPr.AddEditDemandPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:NedvizhPr"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="800"
+      Title="AddEditDemandPage">
+    <ScrollViewer>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Клиент" Foreground="#FF37474F" VerticalAlignment="Center" Margin="0,0,0,20" />
+            <TextBlock Text="Риэлтор" Grid.Row="1" Foreground="#FF37474F" VerticalAlignment="Center" Margin="0,0,0,20"/>
+            <TextBlock Text="Цена min" Grid.Row="2" Foreground="#FF37474F" VerticalAlignment="Center" Margin="0,0,0,20"/>
+            <TextBlock Text="Цена max" Grid.Row="3" Foreground="#FF37474F" VerticalAlignment="Center" Margin="0,0,0,20"/>
+            <TextBlock Text="Адрес Город" Grid.Row="4" Foreground="#FF37474F" VerticalAlignment="Center" Margin="0,0,0,20" />
+            <TextBlock Text="Адрес Улица" Grid.Row="5" Foreground="#FF37474F" VerticalAlignment="Center" Margin="0,0,0,20"/>
+            <TextBlock Text="Адрес Дом" Grid.Row="6" Foreground="#FF37474F" VerticalAlignment="Center" Margin="0,0,0,20"/>
+            <TextBlock Text="Адрес Номер" Grid.Row="7" Foreground="#FF37474F" VerticalAlignment="Center" Margin="0,0,0,20"/>
+            <TextBlock Text="Площадь min" Grid.Row="8" Foreground="#FF37474F" VerticalAlignment="Center" Margin="0,0,0,20" />
+            <TextBlock Text="Площадь max" Grid.Row="9" Foreground="#FF37474F" VerticalAlignment="Center" Margin="0,0,0,20"/>
+            <TextBlock Text="Этаж min" Grid.Row="10" Foreground="#FF37474F" VerticalAlignment="Center" Margin="0,0,0,20"/>
+            <TextBlock Text="Этаж max" Grid.Row="11" Foreground="#FF37474F" VerticalAlignment="Center" Margin="0,0,0,20"/>
+            <TextBlock Text="Комнаты min" Grid.Row="12" Foreground="#FF37474F" VerticalAlignment="Center" Margin="0,0,0,20"/>
+            <TextBlock Text="Комнаты max" Grid.Row="13" Foreground="#FF37474F" VerticalAlignment="Center" Margin="0,0,0,20"/>
+            <ComboBox Grid.Column="1" Text="{Binding ClientId}" x:Name="cbClients" DisplayMemberPath="Id" Foreground="#FF37474F" VerticalAlignment="Center"  Margin="0,0,0,20"/>
+            <ComboBox Grid.Column="1" Text="{Binding AgentId}" Grid.Row="1" x:Name="cbAgents" DisplayMemberPath="Id" Foreground="#FF37474F" VerticalAlignment="Center" Margin="0,0,0,20"/>
+            <TextBox x:Name="tb1" Style="{StaticResource MyWaterMarkStyle}" Tag="Цена min" Text="{Binding MinPrice}" Grid.Column="2" Grid.Row="2" Width="300" 
+                 HorizontalAlignment="Left" Foreground="#FF37474F" Margin="0,0,0,20"/>
+            <TextBox x:Name="tb2" Style="{StaticResource MyWaterMarkStyle}" Tag="Цена max" Text="{Binding MaxPrice}" Grid.Column="2" Grid.Row="3" Width="300" 
+                 HorizontalAlignment="Left" Foreground="#FF37474F" Margin="0,0,0,20"/>
+            <TextBox x:Name="tb3" Style="{StaticResource MyWaterMarkStyle}" Tag="Адрес Город" Text="{Binding Address_City}"  Grid.Row="4" Grid.Column="1" Width="500" 
+                  HorizontalAlignment="Left" Foreground="#FF37474F" />
+            <TextBox x:Name="tb4" Style="{StaticResource MyWaterMarkStyle}" Tag="Адрес Улица" Text="{Binding Address_Street}" Grid.Column="2" Grid.Row="5" Width="500" 
+                 HorizontalAlignment="Left" Foreground="#FF37474F"/>
+            <TextBox x:Name="tb5" Style="{StaticResource MyWaterMarkStyle}" Tag="Адрес Дом" Text="{Binding Address_House}"  Grid.Column="2" Grid.Row="6" Width="500" 
+                 HorizontalAlignment="Left" Foreground="#FF37474F"/>
+            <TextBox x:Name="tb6" Style="{StaticResource MyWaterMarkStyle}" Tag="Адрес Номер" Text="{Binding Address_Number}" Grid.Column="2" Grid.Row="7" Width="300" 
+                 HorizontalAlignment="Left" Foreground="#FF37474F"/>
+            <TextBox x:Name="tb7" Style="{StaticResource MyWaterMarkStyle}" Tag="Площадь min" Text="{Binding MinArea}" Grid.Column="2" Grid.Row="8" Width="300" 
+                 HorizontalAlignment="Left" Foreground="#FF37474F" Margin="0,0,0,20"/>
+            <TextBox x:Name="tb8" Style="{StaticResource MyWaterMarkStyle}" Tag="Площадь max" Text="{Binding MaxArea}" Grid.Column="2" Grid.Row="9" Width="300" 
+                 HorizontalAlignment="Left" Foreground="#FF37474F" Margin="0,0,0,20"/>
+            <TextBox x:Name="tb9" Style="{StaticResource MyWaterMarkStyle}" Tag="Этаж min" Text="{Binding MinFloor}" Grid.Column="2" Grid.Row="10" Width="300" 
+                 HorizontalAlignment="Left" Foreground="#FF37474F" Margin="0,0,0,20"/>
+            <TextBox x:Name="tb10" Style="{StaticResource MyWaterMarkStyle}" Tag="Этаж max" Text="{Binding MaxFloor}" Grid.Column="2" Grid.Row="11" Width="300" 
+                 HorizontalAlignment="Left" Foreground="#FF37474F" Margin="0,0,0,20"/>
+            <TextBox x:Name="tb11" Style="{StaticResource MyWaterMarkStyle}" Tag="Комнаты min" Text="{Binding MinRooms}" Grid.Column="2" Grid.Row="12" Width="300" 
+                 HorizontalAlignment="Left" Foreground="#FF37474F" Margin="0,0,0,20"/>
+            <TextBox x:Name="tb12" Style="{StaticResource MyWaterMarkStyle}" Tag="Комнаты max" Text="{Binding MaxRooms}" Grid.Column="2" Grid.Row="13" Width="300" 
+                 HorizontalAlignment="Left" Foreground="#FF37474F" Margin="0,0,0,20"/>
+            <Button Template="{DynamicResource ButtonTemplate1}" Content="Сохранить" Grid.ColumnSpan="2" Grid.Row="14" 
+                Name="SaveBtn" Click="SaveBtn_Click" Width="150"/>
+        </Grid>
+    </ScrollViewer>
+</Page>

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -27,17 +29,48 @@ namespace NedvizhPr
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            Manager.MainFrame.Navigate(new AddEditDemandPage(null));
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
+            var demForRemoving = DGridDemands.SelectedItems.Cast<Demand>().Select(demand => demand.Id).ToList();
+            var dbContext = nedvizhdbEntities.GetContext();
+            bool anyIdsInDeals = dbContext.Deals.Any(deal => demForRemoving.Contains(deal.Id));
+                if (MessageBox.Show($"Вы точно хотите удалить следующие {demForRemoving.Count()} элементов?", "Внимание",
+                  MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                    var idsToRemove = dbContext.Demands
+                              .Where(demand => demForRemoving.Contains(demand.Id) && !dbContext.Deals.Any(deal => deal.Id == demand.Id))
+                              .Select(demand => demand.Id)
+                              .ToList();
+                    foreach (var id in idsToRemove)
+                    {
+                        var demandToRemove = dbContext.Demands.Find(id);
+                        dbContext.Demands.Remove(demandToRemove);
+                    }
+                    var idsNotRemovable = demForRemoving.Except(idsToRemove).ToList();
 
+                    if (idsNotRemovable.Any())
+                    {
+                        string message = $"Следующие элементы содержатся в таблице Deals и не могут быть удалены: {string.Join(", ", idsNotRemovable)}";
+                        Console.WriteLine(message);
+                    }
+                    dbContext.SaveChanges();
+                        MessageBox.Show("Данные удалены");
+                    DGridDemands.ItemsSource = dbContext.Demands.ToList();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message.ToString());
+                    }
+                }            
         }
-
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            Manager.MainFrame.Navigate(new AddEditDemandPage((sender as Button).DataContext as Demand));
         }
 
         private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
