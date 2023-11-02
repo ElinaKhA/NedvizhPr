@@ -36,37 +36,35 @@ namespace NedvizhPr
         {
             var demForRemoving = DGridDemands.SelectedItems.Cast<Demand>().Select(demand => demand.Id).ToList();
             var dbContext = nedvizhdbEntities.GetContext();
-            bool anyIdsInDeals = dbContext.Deals.Any(deal => demForRemoving.Contains(deal.Id));
-                if (MessageBox.Show($"Вы точно хотите удалить следующие {demForRemoving.Count()} элементов?", "Внимание",
-                  MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show($"Вы точно хотите удалить следующие {demForRemoving.Count()} элементов?", "Внимание",
+              MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                try
                 {
-                    try
+                var idsNotRemovable = demForRemoving
+                .Where(id => dbContext.Deals.Any(deal => deal.DemandId == id))
+                .ToList();
+                var idsToRemove = demForRemoving.Except(idsNotRemovable).ToList();
+                foreach (var id in idsToRemove)
+                {
+                    var demandToRemove = dbContext.Demands.Find(id);
+                    dbContext.Demands.Remove(demandToRemove);
+                    MessageBox.Show("Данные удалены");
+                }
+               
+                if (idsNotRemovable.Any())
                     {
-                    var idsToRemove = dbContext.Demands
-                              .Where(demand => demForRemoving.Contains(demand.Id) && !dbContext.Deals.Any(deal => deal.Id == demand.Id))
-                              .Select(demand => demand.Id)
-                              .ToList();
-                    foreach (var id in idsToRemove)
-                    {
-                        var demandToRemove = dbContext.Demands.Find(id);
-                        dbContext.Demands.Remove(demandToRemove);
+                        MessageBox.Show($"Следующие элементы содержатся в таблице Deals и не могут быть удалены: {string.Join(", ", idsNotRemovable)}");
                     }
-                    var idsNotRemovable = demForRemoving.Except(idsToRemove).ToList();
-
-                    if (idsNotRemovable.Any())
-                    {
-                        string message = $"Следующие элементы содержатся в таблице Deals и не могут быть удалены: {string.Join(", ", idsNotRemovable)}";
-                        Console.WriteLine(message);
-                    }
-                    dbContext.SaveChanges();
-                        MessageBox.Show("Данные удалены");
-                    DGridDemands.ItemsSource = dbContext.Demands.ToList();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message.ToString());
-                    }
-                }            
+                dbContext.SaveChanges();
+                
+                DGridDemands.ItemsSource = dbContext.Demands.ToList();
+                }
+                catch (Exception ex)
+                {
+                MessageBox.Show(ex.Message.ToString());
+                }
+            }            
         }
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
