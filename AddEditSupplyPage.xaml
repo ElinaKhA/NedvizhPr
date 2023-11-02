@@ -28,7 +28,7 @@
         <ComboBox Grid.Column="1" Text="{Binding ClientId}" x:Name="cbClients" DisplayMemberPath="Id" Foreground="#FF37474F" VerticalAlignment="Center"  Margin="0,0,0,20"/>
         <ComboBox Grid.Column="2" Text="{Binding AgentId}" Grid.Row="1" x:Name="cbAgents" DisplayMemberPath="Id" Foreground="#FF37474F" VerticalAlignment="Center" Margin="0,0,0,20"/>
         <ComboBox Grid.Column="2" Text="{Binding RealtyId}" Grid.Row="2" x:Name="cbReal" DisplayMemberPath="Id" Foreground="#FF37474F" VerticalAlignment="Center" Margin="0,0,0,20"/>
-        <TextBox Style="{StaticResource MyWaterMarkStyle}" Tag="Цена" Text="{Binding Price}" Grid.Column="2" Grid.Row="3" Width="300" 
+        <TextBox x:Name="tbPrice" Style="{StaticResource MyWaterMarkStyle}" Tag="Цена" Text="{Binding Price}" Grid.Column="2" Grid.Row="3" Width="300" 
                  HorizontalAlignment="Left" Foreground="#FF37474F" Margin="0,0,0,20"/>
         <Button Template="{DynamicResource ButtonTemplate1}" Content="Сохранить" Grid.ColumnSpan="2" Grid.Row="5" 
                 Name="SaveBtn" Click="SaveBtn_Click" Width="150"/>
