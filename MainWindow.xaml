@@ -6,42 +6,6 @@
         xmlns:local="clr-namespace:NedvizhPr"
         mc:Ignorable="d"
         Title="Esoft" Height="450" Width="800" MaxWidth="800" MaxHeight="450" MinWidth="800" MinHeight="450" Icon="/Resources/logo.png" WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FF0079C3"/>
-        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF0079C3"/>
-        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FF0079C3"/>
-        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF0079C3"/>
-        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
-        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
-        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
-        <ControlTemplate x:Key="ButtonTemplate1" TargetType="{x:Type ButtonBase}">
-            <Border x:Name="border" CornerRadius="2" Background="{TemplateBinding Background}" 
-                    BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
-                    SnapsToDevicePixels="true">
-                <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                  Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" 
-                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-            </Border>
-            <ControlTemplate.Triggers>
-                <Trigger Property="Button.IsDefaulted" Value="true">
-                    <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-                </Trigger>
-                <Trigger Property="IsMouseOver" Value="true">
-                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
-                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
-                </Trigger>
-                <Trigger Property="IsPressed" Value="true">
-                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
-                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
-                </Trigger>
-                <Trigger Property="IsEnabled" Value="false">
-                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
-                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
-                    <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
-                </Trigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
-    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="75"/>
@@ -63,7 +27,23 @@
                 <Button Template="{DynamicResource ButtonTemplate1}" x:Name="DealsBtn" Content="Сделка" Click="DealsBtn_Click"/>
             </StackPanel>
         </Grid>
-        <Grid Background="#ECEFF1" Grid.Row="3"/>
+        <Canvas Grid.Row="3">
+            <Image Source="Resources/logo.png" Height="30">
+                <Image.RenderTransform>
+                    <TranslateTransform x:Name="ImageTranslate" X="0" Y="0" />
+                </Image.RenderTransform>
+                <Image.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard>
+                            <Storyboard RepeatBehavior="Forever">
+                                <DoubleAnimation Storyboard.TargetName="ImageTranslate" Storyboard.TargetProperty="X"
+                            From="0" To="708" Duration="0:0:10" AutoReverse="True" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Image.Triggers>
+            </Image>
+        </Canvas>
         <Frame Name="MainFrame" Grid.Row="2"  NavigationUIVisibility="Hidden" Content="Нажмите на кнопки выше" 
                HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
