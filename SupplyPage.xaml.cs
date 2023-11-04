@@ -32,16 +32,31 @@ namespace NedvizhPr
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            var supForRemoving = DGridSupply.SelectedItems.Cast<Supply>().ToList();
+            var supForRemoving = DGridSupply.SelectedItems.Cast<Supply>().Select(sup => sup.Id).ToList();
+            var dbContext = nedvizhdbEntities.GetContext();
             if (MessageBox.Show($"Вы точно хотите удалить следующие {supForRemoving.Count()} элементов?", "Внимание",
-                MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+              MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 try
                 {
-                    nedvizhdbEntities.GetContext().Supplies.RemoveRange(supForRemoving);
-                    nedvizhdbEntities.GetContext().SaveChanges();
-                    MessageBox.Show("Данные удалены");
-                    DGridSupply.ItemsSource = nedvizhdbEntities.GetContext().Supplies.ToList();
+                    var idsNotRemovable = supForRemoving
+                    .Where(id => dbContext.Deals.Any(deal => deal.SupplyId == id))
+                    .ToList();
+                    var idsToRemove = supForRemoving.Except(idsNotRemovable).ToList();
+                    foreach (var id in idsToRemove)
+                    {
+                        var suplToRemove = dbContext.Supplies.Find(id);
+                        dbContext.Supplies.Remove(suplToRemove);
+                        MessageBox.Show("Данные удалены");
+                    }
+
+                    if (idsNotRemovable.Any())
+                    {
+                        MessageBox.Show($"Следующие элементы содержатся в таблице Deals и не могут быть удалены: {string.Join(", ", idsNotRemovable)}");
+                    }
+                    dbContext.SaveChanges();
+
+                    DGridSupply.ItemsSource = dbContext.Supplies.ToList();
                 }
                 catch (Exception ex)
                 {

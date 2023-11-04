@@ -37,16 +37,31 @@ namespace NedvizhPr
         }
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            var realForRemoving = DGridRealty.SelectedItems.Cast<Realty>().ToList();
+            var realForRemoving = DGridRealty.SelectedItems.Cast<Realty>().Select(real => real.Id).ToList();
+            var dbContext = nedvizhdbEntities.GetContext();
             if (MessageBox.Show($"Вы точно хотите удалить следующие {realForRemoving.Count()} элементов?", "Внимание",
-                MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+              MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 try
                 {
-                    nedvizhdbEntities.GetContext().Realties.RemoveRange(realForRemoving);
-                    nedvizhdbEntities.GetContext().SaveChanges();
-                    MessageBox.Show("Данные удалены");
-                    DGridRealty.ItemsSource = nedvizhdbEntities.GetContext().Realties.ToList();
+                    var idsNotRemovable = realForRemoving
+                    .Where(id => dbContext.Supplies.Any(s => s.RealtyId == id))
+                    .ToList();
+                    var idsToRemove = realForRemoving.Except(idsNotRemovable).ToList();
+                    foreach (var id in idsToRemove)
+                    {
+                        var reToRemove = dbContext.Realties.Find(id);
+                        dbContext.Realties.Remove(reToRemove);
+                        MessageBox.Show("Данные удалены");
+                    }
+
+                    if (idsNotRemovable.Any())
+                    {
+                        MessageBox.Show($"Следующие элементы содержатся в таблице Supplies (Предложения) и не могут быть удалены: " +
+                            $"{string.Join(", ", idsNotRemovable)}");
+                    }
+                    dbContext.SaveChanges();
+                    DGridRealty.ItemsSource = dbContext.Realties.ToList();
                 }
                 catch (Exception ex)
                 {

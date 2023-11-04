@@ -35,38 +35,38 @@ namespace NedvizhPr
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            StringBuilder err = new StringBuilder();
-
-            if (old == 0)
-            {
-                var lastid = nedvizhdbEntities.GetContext().Realties.ToList().Last().Id;
-                int nid = lastid + 1;
-                _curReal.Id = nid;
-                _curReal.Coordinate_latitude = 0;
-                _curReal.Coordinate_longitude = 0;
-            }
-            if (old == 1)
-            {
-                Realty real = nedvizhdbEntities.GetContext().Realties
-                    .Where(o => o.Id == _curReal.Id)
-                    .FirstOrDefault();
-                nedvizhdbEntities.GetContext().Realties.Remove(real);
-                nedvizhdbEntities.GetContext().SaveChanges();
-            }
-
-
-            nedvizhdbEntities.GetContext().Realties.Add(_curReal);
-
             try
             {
-                nedvizhdbEntities.GetContext().SaveChanges();
-                MessageBox.Show("Информация сохранена");
-                Manager.MainFrame.GoBack();
+                StringBuilder err = new StringBuilder();
+                if (old == 0)
+                {
+                    var lastid = nedvizhdbEntities.GetContext().Realties.ToList().Last().Id;
+                    int nid = lastid + 1;
+                    _curReal.Id = nid;
+                    _curReal.Coordinate_latitude = 0;
+                    _curReal.Coordinate_longitude = 0;
+                }
+                if (old == 1)
+                {
+                    Realty real = nedvizhdbEntities.GetContext().Realties
+                        .Where(o => o.Id == _curReal.Id)
+                        .FirstOrDefault();
+                    nedvizhdbEntities.GetContext().Realties.Remove(real);
+                    nedvizhdbEntities.GetContext().SaveChanges();
+                }
+                nedvizhdbEntities.GetContext().Realties.Add(_curReal);
+                try
+                {
+                    nedvizhdbEntities.GetContext().SaveChanges();
+                    MessageBox.Show("Информация сохранена");
+                    Manager.MainFrame.GoBack();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message.ToString());
-            }
+            catch { MessageBox.Show("Ошибка сервера"); }
         }
     }
 }

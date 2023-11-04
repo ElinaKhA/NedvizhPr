@@ -1,0 +1,29 @@
+﻿<Page x:Class="NedvizhPr.AddEditDealsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:NedvizhPr"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AddEditDealsPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Потребность" Foreground="#FF37474F" VerticalAlignment="Center" Margin="0,0,0,20" />
+        <TextBlock Text="Предложение" Grid.Row="1" Foreground="#FF37474F" VerticalAlignment="Center" Margin="0,0,0,20"/>
+        <ComboBox Grid.Column="1" Text="{Binding DemandId}" x:Name="cbDem" DisplayMemberPath="Id" Foreground="#FF37474F" VerticalAlignment="Center"  Margin="0,0,0,20"/>
+        <ComboBox Grid.Column="2" Text="{Binding SupplyId}" Grid.Row="1" x:Name="cbSup" DisplayMemberPath="Id" Foreground="#FF37474F" VerticalAlignment="Center" Margin="0,0,0,20"/>
+        <Button Template="{DynamicResource ButtonTemplate1}" Content="Сохранить" Grid.ColumnSpan="2" Grid.Row="5" 
+                Name="SaveBtn" Click="SaveBtn_Click" Width="150"/>
+    </Grid>
+</Page>

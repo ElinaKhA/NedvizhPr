@@ -1,6 +1,7 @@
 ﻿using DuoVia.FuzzyStrings;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using System.Text;
@@ -77,16 +78,37 @@ namespace NedvizhPr
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            var ids = DGridClients.SelectedItems.Cast<ClientData>().ToList().Select(client => client.Id).ToList();
+            var ids = DGridClients.SelectedItems.Cast<ClientData>().Select(client => client.Id).ToList();
             var clientsToRemove = nedvizhdbEntities.GetContext().Clients.Where(client => ids.Contains(client.Id)).ToList();
+            var dbContext = nedvizhdbEntities.GetContext();
             if (MessageBox.Show($"Вы точно хотите удалить следующие {clientsToRemove.Count()} элементов?", "Внимание", 
                 MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 try
                 {
-                    nedvizhdbEntities.GetContext().Clients.RemoveRange(clientsToRemove);
-                    nedvizhdbEntities.GetContext().SaveChanges();
-                    MessageBox.Show("Данные удалены");
+                    var idsDNotRemovable = ids
+                    .Where(id => dbContext.Demands.Any(d => d.ClientId == id))
+                    .ToList();
+                    var idsSNotRemovable = ids
+                    .Where(id => dbContext.Supplies.Any(deal => deal.ClientId == id))
+                    .ToList();
+                    var idsToRemove = ids.Except(idsDNotRemovable).Except(idsSNotRemovable).ToList();
+                    foreach (var id in idsToRemove)
+                    {
+                        var suplToRemove = dbContext.Clients.Find(id);
+                        dbContext.Clients.Remove(suplToRemove);
+                        dbContext.SaveChanges();
+                        MessageBox.Show("Данные удалены");
+                    }
+
+                    if (idsDNotRemovable.Any())
+                    {
+                        MessageBox.Show($"Следующие элементы содержатся в таблице Demands (Потребности) и не могут быть удалены: {string.Join(", ", idsDNotRemovable)}");
+                    }
+                    if (idsSNotRemovable.Any())
+                    {
+                        MessageBox.Show($"Следующие элементы содержатся в таблице Supplies (Предложения) и не могут быть удалены: {string.Join(", ", idsSNotRemovable)}");
+                    }
                     DGridClients.ItemsSource = GetAllClientsData(nedvizhdbEntities.GetContext()).ToList();
                 }
                 catch (Exception ex)

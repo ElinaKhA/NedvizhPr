@@ -37,43 +37,43 @@ namespace NedvizhPr
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            StringBuilder err = new StringBuilder();
-            if (string.IsNullOrWhiteSpace(_curClient.Phone) && string.IsNullOrWhiteSpace(_curClient.Email))
-                err.AppendLine("Укажите Телефон или Email");
-
-            if (err.Length > 0)
-            {
-                MessageBox.Show(err.ToString());
-                return;
-            }
-            if (old == 0)
-            {
-                var lastid = nedvizhdbEntities.GetContext().Clients.ToList().Last().Id;
-                int nid = lastid + 1;
-                _curClient.Id = nid;
-            }
-            if (old == 1)
-            {
-                Client client = nedvizhdbEntities.GetContext().Clients
-                    .Where(o => o.Id == _curClient.Id)
-                    .FirstOrDefault();
-                nedvizhdbEntities.GetContext().Clients.Remove(client);
-                nedvizhdbEntities.GetContext().SaveChanges();
-            }
-            
-            
-            nedvizhdbEntities.GetContext().Clients.Add(_curClient);
-
             try
             {
-                nedvizhdbEntities.GetContext().SaveChanges();
-                MessageBox.Show("Информация сохранена");
-                Manager.MainFrame.GoBack();
+                StringBuilder err = new StringBuilder();
+                if (string.IsNullOrWhiteSpace(_curClient.Phone) && string.IsNullOrWhiteSpace(_curClient.Email))
+                    err.AppendLine("Укажите Телефон или Email");
+                if (err.Length > 0)
+                {
+                    MessageBox.Show(err.ToString());
+                    return;
+                }
+                if (old == 0)
+                {
+                    var lastid = nedvizhdbEntities.GetContext().Clients.ToList().Last().Id;
+                    int nid = lastid + 1;
+                    _curClient.Id = nid;
+                }
+                if (old == 1)
+                {
+                    Client client = nedvizhdbEntities.GetContext().Clients
+                        .Where(o => o.Id == _curClient.Id)
+                        .FirstOrDefault();
+                    nedvizhdbEntities.GetContext().Clients.Remove(client);
+                    nedvizhdbEntities.GetContext().SaveChanges();
+                }
+                nedvizhdbEntities.GetContext().Clients.Add(_curClient);
+                try
+                {
+                    nedvizhdbEntities.GetContext().SaveChanges();
+                    MessageBox.Show("Информация сохранена");
+                    Manager.MainFrame.GoBack();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message.ToString());
-            }
+            catch { MessageBox.Show("Ошибка сервера"); }
         }
     }
 }

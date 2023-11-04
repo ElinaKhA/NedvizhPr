@@ -79,17 +79,38 @@ namespace NedvizhPr
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            var ids = DGridAgents.SelectedItems.Cast<AgentData>().ToList().Select(agent => agent.Id).ToList();
+            var ids = DGridAgents.SelectedItems.Cast<AgentData>().Select(agent => agent.Id).ToList();
             var agentsToRemove = nedvizhdbEntities.GetContext().Agents.Where(agent => ids.Contains(agent.Id)).ToList();
-
+            var dbContext = nedvizhdbEntities.GetContext();
             if (MessageBox.Show($"Вы точно хотите удалить следующие {agentsToRemove.Count()} элементов?", "Внимание",
                 MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 try
                 {
-                    nedvizhdbEntities.GetContext().Agents.RemoveRange(agentsToRemove);
-                    nedvizhdbEntities.GetContext().SaveChanges();
-                    MessageBox.Show("Данные удалены");
+                    var idsDNotRemovable = ids
+                      .Where(id => dbContext.Demands.Any(d => d.AgentId == id))
+                      .ToList();
+                    var idsSNotRemovable = ids
+                    .Where(id => dbContext.Supplies.Any(deal => deal.AgentId == id))
+                    .ToList();
+                    var idsToRemove = ids.Except(idsDNotRemovable).Except(idsSNotRemovable).ToList();
+                    foreach (var id in idsToRemove)
+                    {
+                        var suplToRemove = dbContext.Agents.Find(id);
+                        dbContext.Agents.Remove(suplToRemove);
+                        dbContext.SaveChanges();
+                        MessageBox.Show("Данные удалены");
+                    }
+
+                    if (idsDNotRemovable.Any())
+                    {
+                        MessageBox.Show($"Следующие элементы содержатся в таблице Demands (Потребности) и не могут быть удалены: {string.Join(", ", idsDNotRemovable)}");
+                    }
+                    if (idsSNotRemovable.Any())
+                    {
+                        MessageBox.Show($"Следующие элементы содержатся в таблице Supplies (Предложения) и не могут быть удалены: {string.Join(", ", idsSNotRemovable)}");
+                    }
+                  
                     DGridAgents.ItemsSource = GetAllAgentsData(nedvizhdbEntities.GetContext()).ToList();
                 }
                 catch (Exception ex)
@@ -97,8 +118,8 @@ namespace NedvizhPr
                     MessageBox.Show(ex.Message.ToString());
                 }
             }
+
         }
-       
         private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (Visibility == Visibility.Visible)
